@@ -1,0 +1,10 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Search } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
+import { PageHero, Section } from "@/components/site/primitives";
+import { FAQ_GROUPS } from "@/data/site";
+import { pageMeta } from "@/lib/seo";
+export const Route=createFileRoute("/faq")({head:()=>pageMeta("Frequently Asked Questions","Find answers about appointments, services, billing, emergency care and patient visits."),component:Faq});
+function Faq(){const[search,setSearch]=useState("");const groups=useMemo(()=>FAQ_GROUPS.map(g=>({...g,items:g.items.filter(x=>`${x.q} ${x.a}`.toLowerCase().includes(search.toLowerCase()))})).filter(g=>g.items.length),[search]);return <><PageHero eyebrow="Help centre" title="Frequently Asked Questions" description="Clear answers to common questions about visiting our hospital."/><Section><label className="relative mx-auto block max-w-xl"><span className="sr-only">Search frequently asked questions</span><Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"/><Input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search questions" className="min-h-12 rounded-full pl-11"/></label><div className="mx-auto mt-10 max-w-3xl space-y-10">{groups.length?groups.map(g=><section key={g.category}><h2 className="text-xl">{g.category}</h2><Accordion type="single" collapsible className="mt-3">{g.items.map((f,i)=><AccordionItem key={f.q} value={`${g.category}-${i}`}><AccordionTrigger>{f.q}</AccordionTrigger><AccordionContent className="leading-relaxed text-muted-foreground">{f.a}</AccordionContent></AccordionItem>)}</Accordion></section>):<div className="rounded-2xl border border-border bg-surface p-10 text-center"><h2>No answers found</h2><p className="mt-2 text-sm text-muted-foreground">Try a broader search.</p></div>}</div></Section></>}

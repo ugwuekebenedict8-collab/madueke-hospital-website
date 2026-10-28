@@ -1,0 +1,11 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { Search } from "lucide-react";
+import { useMemo, useState } from "react";
+import { ArticleCard } from "@/components/site/cards";
+import { PageHero, PlaceholderNote, Section } from "@/components/site/primitives";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ARTICLES, ARTICLE_CATEGORIES } from "@/data/site";
+import { pageMeta } from "@/lib/seo";
+export const Route=createFileRoute("/resources/")({head:()=>pageMeta("Health Resources","Plain-language health and wellness resources for patients and families."),component:Resources});
+function Resources(){const [search,setSearch]=useState("");const[cat,setCat]=useState("All");const[limit,setLimit]=useState(6);const filtered=useMemo(()=>ARTICLES.filter(a=>(cat==="All"||a.category===cat)&&`${a.title} ${a.excerpt}`.toLowerCase().includes(search.toLowerCase())),[search,cat]);return <><PageHero eyebrow="Health library" title="Health & Wellness Resources" description="Clear, responsible general information to help you make informed conversations with your care team."/><Section><PlaceholderNote>Articles are placeholder content and must be medically reviewed before publishing. They do not replace professional medical advice.</PlaceholderNote><div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto]"><label className="relative"><span className="sr-only">Search articles</span><Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"/><Input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search health topics" className="min-h-11 rounded-full pl-11"/></label><div className="flex flex-wrap gap-2">{ARTICLE_CATEGORIES.map(c=><Button key={c} size="sm" variant={cat===c?"default":"outline"} onClick={()=>setCat(c)} className="rounded-full">{c}</Button>)}</div></div>{filtered.length?<><div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{filtered.slice(0,limit).map(a=><ArticleCard key={a.slug} article={a}/>)}</div>{limit<filtered.length?<div className="mt-10 text-center"><Button variant="outline" onClick={()=>setLimit(v=>v+3)} className="rounded-full">Load More</Button></div>:null}</>:<div className="mt-8 rounded-2xl border border-border bg-surface p-10 text-center"><h2>No articles found</h2></div>}</Section></>}

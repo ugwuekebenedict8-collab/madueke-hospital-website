@@ -1,0 +1,158 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system — premium, calm hospital brand.
+ * Poppins typography + white space + light blue + navy text.
+ * Shared blue-and-white semantic tokens. Keep component colors routed through these variables.
+ */
+
+@theme inline {
+  --font-sans:
+    "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 12px);
+  --radius-3xl: calc(var(--radius) + 20px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-footer: var(--footer);
+
+  --shadow-soft: 0 1px 2px rgb(18 59 93 / 0.04), 0 8px 24px -12px rgb(18 59 93 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(18 59 93 / 0.05), 0 20px 40px -20px rgb(18 59 93 / 0.2);
+
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.6s ease-out both;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+:root {
+  --radius: 1rem;
+
+  --background: #f4f9ff;
+  --foreground: #123b5d;
+
+  --card: #ffffff;
+  --card-foreground: #123b5d;
+  --popover: #ffffff;
+  --popover-foreground: #123b5d;
+
+  --primary: #3498db;
+  --primary-hover: #1976d2;
+  --primary-foreground: #ffffff;
+  --primary-soft: #eaf5ff;
+
+  --secondary: #eaf5ff;
+  --secondary-foreground: #123b5d;
+
+  --muted: #eaf5ff;
+  --muted-foreground: #52708a;
+
+  --accent: #eaf5ff;
+  --accent-foreground: #1976d2;
+
+  --destructive: #c0392b;
+  --destructive-foreground: #ffffff;
+
+  --border: #cfe5f5;
+  --input: #cfe5f5;
+  --ring: #3498db;
+
+  --surface: #eaf5ff;
+  --surface-strong: #d7edfc;
+  --footer: #123b5d;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-weight: 400;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 600;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .container-page {
+    padding-inline: 2rem;
+  }
+}
